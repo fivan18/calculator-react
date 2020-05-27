@@ -15,10 +15,10 @@ const ButtonPanel = () => {
       {groups.map((group, index) => (
         <div className="row" key={`group${index + 1}`}>
           {group.map(value => {
-            if(/^([0-9]|\.|AC|\+\/-|%)$/.test(value)) {
-              return value === '0' ?
-                <Button color={'#e0e0e0'} wide={true} key={value} value={value} /> :
-                <Button color={'#e0e0e0'} key={value} value={value} /> ;
+            if (/^([0-9]|\.|AC|\+\/-|%)$/.test(value)) {
+              return value === '0'
+                ? <Button color="#e0e0e0" wide key={value} value={value} />
+                : <Button color="#e0e0e0" key={value} value={value} />;
             }
             return <Button key={value} value={value} />;
           })}

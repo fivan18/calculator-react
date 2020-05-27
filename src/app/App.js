@@ -1,5 +1,5 @@
 import React from 'react';
-import Big from 'big.js';
+import Big from 'big.js'; // eslint-disable-line import/extensions
 import PropTypes from 'prop-types';
 
 function App(props) {

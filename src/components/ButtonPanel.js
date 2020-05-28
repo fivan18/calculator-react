@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from './Button';
 
-const ButtonPanel = (props) => {
+const ButtonPanel = ({ clickHandler }) => {
   const groups = [
     ['AC', '+/-', '%', '÷'],
     ['7', '8', '9', 'x'],
@@ -9,7 +9,7 @@ const ButtonPanel = (props) => {
     ['1', '2', '3', '+'],
     ['0', '.', '='],
   ];
-  const { clickHandler } = props;
+
   return (
     <div className="btn-panel d-flex">
       {groups.map((group, index) => (
@@ -17,10 +17,10 @@ const ButtonPanel = (props) => {
           {group.map(value => {
             if (/^([0-9]|\.|AC|\+\/-|%)$/.test(value)) {
               return value === '0'
-                ? <Button clickHandler color="#e0e0e0" wide key={value} value={value} />
-                : <Button clickHandler color="#e0e0e0" key={value} value={value} />;
+                ? <Button clickHandler={clickHandler} color="#e0e0e0" wide key={value} value={value} />
+                : <Button clickHandler={clickHandler} color="#e0e0e0" key={value} value={value} />;
             }
-            return <Button clickHandler key={value} value={value} />;
+            return <Button clickHandler={clickHandler} key={value} value={value} />;
           })}
         </div>
       ))}

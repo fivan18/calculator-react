@@ -1,7 +1,7 @@
 import React from 'react';
 import Display from './Display';
 import ButtonPanel from './ButtonPanel';
-import calculate from '../logic/calculate'; // eslint-disable-line no-unused-vars
+import calculate from '../logic/calculate';
 
 
 class App extends React.Component {
@@ -10,22 +10,20 @@ class App extends React.Component {
     this.state = {
       total: null,
       next: null,
-      operation: null
+      operation: null, // eslint-disable-line react/no-unused-state
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(buttonName){
-    this.setState(state => {
-      return calculate(state, buttonName)
-    });
+  handleClick(buttonName) {
+    this.setState(state => calculate(state, buttonName));
   }
 
   render() {
     const { total, next } = this.state;
     return (
       <div className="app d-flex">
-        <Display result={ next || total} />
+        <Display result={next || total} />
         <ButtonPanel clickHandler={this.handleClick} />
       </div>
     );

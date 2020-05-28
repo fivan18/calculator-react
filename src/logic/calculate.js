@@ -1,30 +1,51 @@
 import Big from 'big.js'; // eslint-disable-line import/extensions
 import operate from './operate';
-import { number } from 'prop-types';
 
+/* ******************* helper methods ******************* */
 function validNumber(number){
-  return /^(-)?[1-9]\d*(\.\d+)?$/.test(number);
+  return /^(-)?[0-9]\d*(\.\d+)?$/.test(number);
 }
 function changeSign(number){
   const bigNumber = Big(number);
   bigNumber.s *= -1;
   return bigNumber.toString();
 }
+function invalid(){
+  return { total: null, next: 'Invalid', operation: null };
+}
 
+/* ******************* 'AC', '=', '+/-' ******************* */
 const calculations = {
   AC: () => ({ total: null, next: null, operation: null }),
+  '=': data => {
+    const { total, next, operation } = data;
+    return next && total && validNumber(next) && validNumber(total) ?
+      { total: null, next: operate(total, next, operation), operation: null } :
+      invalid();
+  },
   '+/-': data => {
     let { total, next } = data;
     const { operation } = data;
-    total = Big(total);
-    next = Big(next);
-    total.s *= -1;
-    next.s *= -1;
-    return { total: total.toString(), next: next.toString(), operation };
+
+    if(total){
+      if(validNumber(total)){
+        total = changeSign(total);
+      } 
+      return invalid();
+    }
+
+    if(next){
+      if(validNumber(next)){
+        next = changeSign(next);
+      }
+      return invalid();
+    }
+
+    return { total, next, operation };
   },
 };
 
-// '=', '-'
+/* ******************* '+', 'x', '÷', '%' ******************* */
 const doOperate = (data, operationEnter) => {
   const { total, next, operation } = data;
   if(!next){
@@ -32,17 +53,18 @@ const doOperate = (data, operationEnter) => {
   } else if(total){
     return validNumber(next) && validNumber(total) ?
       { total: operate(total, next, operation), next: null, operation: operationEnter } :
-      { total: null, next: 'Invalid', operation: null };
+      invalid();
   } else {
     return validNumber(next) ? 
       { total: next, next: null, operation: operationEnter } :
-      { total: null, next: 'Invalid', operation: null };
+      invalid();
   }
 };
 ['+', 'x', '÷', '%'].forEach(operation => {
   calculations[operation] = doOperate;
 });
 
+/* ******************* '0', '1', '2', '3', '4', '5', '6', '7', '8', '9','.' ******************* */
 const doGenerateNumber = (data, digit) => {
   let { next } = data;
   const { operation, total } = data;
@@ -56,6 +78,18 @@ const doGenerateNumber = (data, digit) => {
 ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9','.'].forEach(digit => {
   calculations[digit] = doGenerateNumber;
 });
+
+/* ******************* '-' ******************* */
+const minusButton = (data, minusSymbol) => {
+  const { next } = data;
+  if(next){
+    return doOperate(data, minusSymbol);
+  }
+  return doGenerateNumber(data, minusSymbol);
+}
+calculations['-'] = minusButton;
+
+/* ******************* calculate method ******************* */
 const calculate = (data, buttonName) => calculations[buttonName](data, buttonName);
 
 export default calculate;

@@ -30,15 +30,17 @@ const calculations = {
     if(total){
       if(validNumber(total)){
         total = changeSign(total);
-      } 
-      return invalid();
+      } else {
+        return invalid();
+      }
     }
 
     if(next){
       if(validNumber(next)){
         next = changeSign(next);
+      } else {
+        return invalid();
       }
-      return invalid();
     }
 
     return { total, next, operation };

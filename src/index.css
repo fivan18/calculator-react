@@ -23,7 +23,7 @@ code {
 .app {
   width: 700px;
   flex-direction: column;
-  margin: 100px auto;
+  margin: 50px auto;
 }
 
 .display {
@@ -55,4 +55,10 @@ button {
   color: black;
   border: 1px solid #d1d1d1;
   font-size: 35px;
+  cursor: pointer;
+  outline: none;
+}
+
+button:hover {  
+  color: gray;
 }

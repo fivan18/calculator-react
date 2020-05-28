@@ -3,7 +3,7 @@ import operate from './operate';
 import { number } from 'prop-types';
 
 function validNumber(number){
-  return /^(-)?[1-9]\d*(\.\d+)?$/.test(number);
+  return /^(-)?[0-9]\d*(\.\d+)?$/.test(number);
 }
 function changeSign(number){
   const bigNumber = Big(number);

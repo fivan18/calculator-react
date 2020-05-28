@@ -23,6 +23,7 @@ code {
 .app {
   width: 700px;
   flex-direction: column;
+  margin: 100px auto;
 }
 
 .display {

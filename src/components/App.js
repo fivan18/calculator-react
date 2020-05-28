@@ -7,19 +7,24 @@ import calculate from '../logic/calculate'; // eslint-disable-line no-unused-var
 class App extends React.Component {
   constructor(props) {
     super(props);
-    // the state was created to skip linter errors
     this.state = {
-      dummy: '',
+      total: null,
+      next: null,
+      operation: null
     };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(buttonName){
+    this.setState(state => calculate(state, buttonName));
   }
 
   render() {
-    const { dummy } = this.state;
+    const { total, next } = this.state;
     return (
       <div className="app d-flex">
-        {dummy}
-        <Display />
-        <ButtonPanel />
+        <Display result={total || next} />
+        <ButtonPanel clickHandler={this.handleClick} />
       </div>
     );
   }

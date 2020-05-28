@@ -23,11 +23,23 @@ const calculations = {
     return { total: total.toString(), next: next.toString(), operation };
   },
 };
-const doOperate = data => {
+
+// '=', '-'
+const doOperate = (data, operationEnter) => {
   const { total, next, operation } = data;
-  return { total: operate(next, total, operation), next: '', operation: '' };
+  if(!next){
+    return { total, next, operation };
+  } else if(total){
+    return validNumber(next) && validNumber(total) ?
+      { total: operate(total, next, operation), next: null, operation: operationEnter } :
+      { total: null, next: 'Invalid', operation: null };
+  } else {
+    return validNumber(next) ? 
+      { total: next, next: null, operation: operationEnter } :
+      { total: null, next: 'Invalid', operation: null };
+  }
 };
-['=', '+', '-', 'x', '÷', '%'].forEach(operation => {
+['+', 'x', '÷', '%'].forEach(operation => {
   calculations[operation] = doOperate;
 });
 
@@ -44,6 +56,6 @@ const doGenerateNumber = (data, digit) => {
 ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9','.'].forEach(digit => {
   calculations[digit] = doGenerateNumber;
 });
-const calculate = (data, buttonName) => calculations[buttonName](data);
+const calculate = (data, buttonName) => calculations[buttonName](data, buttonName);
 
 export default calculate;

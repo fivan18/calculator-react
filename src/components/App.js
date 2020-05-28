@@ -16,14 +16,17 @@ class App extends React.Component {
   }
 
   handleClick(buttonName){
-    this.setState(state => calculate(state, buttonName));
+    this.setState(state => {
+      console.log(calculate(state, buttonName))
+      return calculate(state, buttonName)
+    });
   }
 
   render() {
     const { total, next } = this.state;
     return (
       <div className="app d-flex">
-        <Display result={total || next} />
+        <Display result={ next || total} />
         <ButtonPanel clickHandler={this.handleClick} />
       </div>
     );

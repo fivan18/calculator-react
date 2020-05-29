@@ -15,7 +15,7 @@ class App extends React.Component {
   render() {
     const { dummy } = this.state;
     return (
-      <div>
+      <div className="app d-flex">
         {dummy}
         <Display />
         <ButtonPanel />

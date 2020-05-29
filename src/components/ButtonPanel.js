@@ -4,15 +4,25 @@ import Button from './Button';
 const ButtonPanel = () => {
   const groups = [
     ['AC', '+/-', '%', '÷'],
-    ['7', '8', '9', 'X'],
+    ['7', '8', '9', 'x'],
     ['4', '5', '6', '-'],
     ['1', '2', '3', '+'],
     ['0', '.', '='],
   ];
+
   return (
-    <div>
+    <div className="btn-panel d-flex">
       {groups.map((group, index) => (
-        <div key={`group${index + 1}`}>{group.map(value => <Button key={value} value={value} />)}</div>
+        <div className="row" key={`group${index + 1}`}>
+          {group.map(value => {
+            if (/^([0-9]|\.|AC|\+\/-|%)$/.test(value)) {
+              return value === '0'
+                ? <Button color="#e0e0e0" wide key={value} value={value} />
+                : <Button color="#e0e0e0" key={value} value={value} />;
+            }
+            return <Button key={value} value={value} />;
+          })}
+        </div>
       ))}
     </div>
   );

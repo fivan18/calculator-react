@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from './Button';
 
-const ButtonPanel = () => {
+const ButtonPanel = ({ clickHandler }) => {
   const groups = [
     ['AC', '+/-', '%', '÷'],
     ['7', '8', '9', 'x'],
@@ -17,15 +18,19 @@ const ButtonPanel = () => {
           {group.map(value => {
             if (/^([0-9]|\.|AC|\+\/-|%)$/.test(value)) {
               return value === '0'
-                ? <Button color="#e0e0e0" wide key={value} value={value} />
-                : <Button color="#e0e0e0" key={value} value={value} />;
+                ? <Button clickHandler={clickHandler} color="#e0e0e0" wide key={value} value={value} />
+                : <Button clickHandler={clickHandler} color="#e0e0e0" key={value} value={value} />;
             }
-            return <Button key={value} value={value} />;
+            return <Button clickHandler={clickHandler} key={value} value={value} />;
           })}
         </div>
       ))}
     </div>
   );
+};
+
+ButtonPanel.propTypes = {
+  clickHandler: PropTypes.func.isRequired,
 };
 
 export default ButtonPanel;
